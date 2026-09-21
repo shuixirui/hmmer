@@ -26,8 +26,6 @@ SHELL          = /bin/sh
 # location of easel
 ESLDIR         = @HMMER_ESLDIR@
 
-# location of libdivsufsort for suffix array creation
-SADIR          = @HMMER_SADIR@
 
 
 # Package information
@@ -82,24 +80,20 @@ ifndef V
 		        ${MAKE} -s -C $$subdir
 endif
 
-.PHONY: all dev check pdf install install-strip uninstall clean distclean TAGS
+.PHONY: all dev check install install-strip uninstall clean distclean TAGS
 
 # all: Compile all documented executables.
 #      (Excludes test programs.)
 #
 all:
 	${QUIET_SUBDIR0}${ESLDIR}     ${QUIET_SUBDIR1} all
-	${QUIET_SUBDIR0}${SADIR}      ${QUIET_SUBDIR1} all
 	${QUIET_SUBDIR0}src           ${QUIET_SUBDIR1} all
-	${QUIET_SUBDIR0}profmark      ${QUIET_SUBDIR1} all
 
 # dev: compile all executables, including drivers.
 #
 dev:
 	${QUIET_SUBDIR0}${ESLDIR}  ${QUIET_SUBDIR1} dev
-	${QUIET_SUBDIR0}${SADIR}   ${QUIET_SUBDIR1} all
 	${QUIET_SUBDIR0}src        ${QUIET_SUBDIR1} dev
-	${QUIET_SUBDIR0}profmark   ${QUIET_SUBDIR1} dev
 
 # tests: compile all test drivers for 'make check'
 #
@@ -112,15 +106,8 @@ tests:
 check:
 	@command -v python3 >/dev/null 2>&1 || { echo >&2 "python3 is required for 'make check', but is not in your PATH. Aborting."; exit 1; }
 	${QUIET_SUBDIR0}${ESLDIR}  ${QUIET_SUBDIR1} tests
-	${QUIET_SUBDIR0}${SADIR}   ${QUIET_SUBDIR1} all
 	${QUIET_SUBDIR0}src        ${QUIET_SUBDIR1} tests
 	${QUIET_SUBDIR0}${ESLDIR}  ${QUIET_SUBDIR1} check
-	${QUIET_SUBDIR0}testsuite  ${QUIET_SUBDIR1} check
-
-# pdf: compile the User Guides.
-#
-pdf:
-	${QUIET_SUBDIR0}documentation ${QUIET_SUBDIR1} pdf
 
 # install: binaries in ${bindir}/, man pages in ${man1dir}/
 #          Creates these directories if they don't exist.
@@ -134,7 +121,6 @@ install: all
 	if [ ! -d ${DESTDIR}${bindir} ]; then ${INSTALL} -d ${DESTDIR}${bindir}; fi
 	if [ ! -d ${DESTDIR}${man1dir} ]; then ${INSTALL} -d ${DESTDIR}${man1dir}; fi
 	${MAKE} -C src install
-	${MAKE} -C documentation install
 
 # install-strip: same as install, but strip binaries
 #
@@ -142,23 +128,17 @@ install-strip: all
 	if [ ! -d ${DESTDIR}${bindir} ]; then ${INSTALL} -d ${DESTDIR}${bindir}; fi
 	if [ ! -d ${DESTDIR}${man1dir} ]; then ${INSTALL} -d ${DESTDIR}${man1dir}; fi
 	${MAKE} -C src install-strip
-	${MAKE} -C documentation install
 
 # uninstall: reverses the steps of "make install".
 #
 uninstall:
 	${MAKE} -C src uninstall
-	${MAKE} -C documentation uninstall
 
 # "make clean" removes almost everything except configuration files.
 #
 clean:
 	${QUIET_SUBDIR0}src           ${QUIET_SUBDIR1} clean
-	${QUIET_SUBDIR0}profmark      ${QUIET_SUBDIR1} clean
-	${QUIET_SUBDIR0}testsuite     ${QUIET_SUBDIR1} clean
-	${QUIET_SUBDIR0}documentation ${QUIET_SUBDIR1} clean
 	${QUIET_SUBDIR0}${ESLDIR}     ${QUIET_SUBDIR1} clean
-	${QUIET_SUBDIR0}${SADIR}      ${QUIET_SUBDIR1} clean
 	${QUIET}-rm -f *.o *~ Makefile.bak core TAGS TAGS.part gmon.out
 ifndef V
 	@echo '     ' CLEAN hmmer
@@ -168,11 +148,7 @@ endif
 #
 distclean:
 	${QUIET_SUBDIR0}src           ${QUIET_SUBDIR1} distclean
-	${QUIET_SUBDIR0}profmark      ${QUIET_SUBDIR1} distclean
-	${QUIET_SUBDIR0}testsuite     ${QUIET_SUBDIR1} distclean
-	${QUIET_SUBDIR0}documentation ${QUIET_SUBDIR1} distclean
 	${QUIET_SUBDIR0}${ESLDIR}     ${QUIET_SUBDIR1} distclean
-	${QUIET_SUBDIR0}${SADIR}      ${QUIET_SUBDIR1} distclean
 	${QUIET}-rm -f config.log config.status
 	${QUIET}-rm -rf autom4te.cache
 	${QUIET}-rm -f *.o *~ Makefile.bak core TAGS TAGS.part gmon.out
@@ -183,5 +159,3 @@ ifndef V
 	@echo '     ' CLEAN hmmer
 endif
 
-TAGS:
-	./makeTAGS.sh

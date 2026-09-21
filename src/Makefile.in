@@ -29,7 +29,7 @@ VMX_CFLAGS     = @VMX_CFLAGS@
 CPPFLAGS       = @CPPFLAGS@
 LDFLAGS        = @LDFLAGS@
 DEFS           = @DEFS@
-LIBS           = -lhmmer -leasel -ldivsufsort  @LIBS@ @LIBGSL@ @PTHREAD_LIBS@ -lm
+LIBS           = -lhmmer -leasel  @LIBS@ @LIBGSL@ @PTHREAD_LIBS@ -lm
 
 AR        = @AR@
 RANLIB    = @RANLIB@
@@ -38,63 +38,22 @@ INSTALL   = @INSTALL@
 
 IMPLDIR   = impl_@IMPL_CHOICE@
 ESLDIR    = @HMMER_ESLDIR@
-SADIR     = @HMMER_SADIR@
 
-MYLIBDIRS = -L../${ESLDIR} -L./${IMPLDIR} -L../${SADIR} -L.
+MYLIBDIRS = -L../${ESLDIR} -L./${IMPLDIR} -L.
 MYINCDIRS = -I../${ESLDIR} \
 	    -I${top_srcdir}/easel \
 	    -I. \
-	    -I${srcdir} \
-	    -I../${SADIR} 
+	    -I${srcdir}
 
-PROGS = alimask\
-	hmmalign\
-	hmmbuild\
-	hmmconvert\
-	hmmemit\
-	hmmfetch\
-	hmmlogo\
-	hmmpgmd\
-	hmmpgmd_shard\
-	hmmpress\
-	hmmscan\
-	hmmsearch\
-	hmmsim\
-	hmmstat\
-	jackhmmer\
-	phmmer\
-	nhmmer\
-	nhmmscan\
-	makehmmerdb
+PROGS = jackhmmer
 
 # "auxprogs" are built but not installed.
-AUXPROGS = \
-	hmmc2 \
-	hmmerfm-exactmatch
+AUXPROGS =
 
 PROGOBJS =\
-	alimask.o\
-	hmmalign.o\
-	hmmbuild.o\
-	hmmconvert.o\
-	hmmemit.o\
-	hmmfetch.o\
-	hmmlogo.o\
-	hmmpgmd.o\
-	hmmpress.o\
-	hmmscan.o\
-	hmmsearch.o\
-	hmmsim.o\
-	hmmstat.o\
-	jackhmmer.o\
-	phmmer.o\
-	nhmmer.o\
-	nhmmscan.o\
-	makehmmerdb.o
+	jackhmmer.o
 
-AUXPROGOBJS = \
-	hmmc2.o \
-	hmmerfm-exactmatch.o
+AUXPROGOBJS =
 
 HDRS =  hmmer.h \
 	cachedb.h \
@@ -122,7 +81,6 @@ OBJS =  build.o\
 	generic_vtrace.o\
 	h2_io.o\
 	heatmap.o\
-	hmmlogo.o\
 	hmmdmstr.o\
 	hmmdmstr_shard.o\
 	hmmd_search_status.o\

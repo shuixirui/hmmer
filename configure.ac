@@ -116,7 +116,6 @@ HMMER_VERSION=$PACKAGE_VERSION
 HMMER_URL="http://hmmer.org/"
 
 HMMER_ESLDIR="easel"
-HMMER_SADIR="libdivsufsort"
 
 EASEL_DATE="Aug 2023"
 EASEL_COPYRIGHT="Copyright (C) 2023 Howard Hughes Medical Institute."
@@ -131,7 +130,6 @@ AC_SUBST(HMMER_VERSION)
 AC_SUBST(HMMER_URL)
 
 AC_SUBST(HMMER_ESLDIR)
-AC_SUBST(HMMER_SADIR)
 
 AC_SUBST(EASEL_DATE)
 AC_SUBST(EASEL_COPYRIGHT)
@@ -680,14 +678,7 @@ AC_SYS_LARGEFILE
 AC_CONFIG_FILES([ \
   Makefile                                     \
   src/Makefile                                 \
-  testsuite/Makefile                           \
-  profmark/Makefile                            \
   src/impl_${impl_choice}/Makefile             \
-  documentation/Makefile                       \
-  documentation/man/Makefile                   \
-  documentation/userguide/Makefile             \
-  documentation/userguide/inclusions/Makefile  \
-  libdivsufsort/Makefile                       \
   ])
 
 # Easel Makefiles.
@@ -695,42 +686,9 @@ AC_CONFIG_FILES([ \
   easel/Makefile                \
   easel/miniapps/Makefile       \
   easel/testsuite/Makefile      \
-  easel/documentation/Makefile  \
   ])
 
-# Substitutions in Userguide .tex files
-# HMMER_VERSION, HMMER_DATE, HMMER_COPYRIGHT
-AC_CONFIG_FILES([ \
-  documentation/userguide/titlepage.tex  \
-  documentation/userguide/titlepage_daemon.tex  \
-  documentation/userguide/copyright.tex  \
-  ])
 
-# Substitutions in HMMER man pages:
-# HMMER_VERSION, HMMER_DATE, HMMER_COPYRIGHT, HMMER_LICENSE, HMMER_URL
-AC_CONFIG_FILES([ \
-  documentation/man/alimask.man     \
-  documentation/man/hmmalign.man    \
-  documentation/man/hmmbuild.man    \
-  documentation/man/hmmc2.man       \
-  documentation/man/hmmconvert.man  \
-  documentation/man/hmmemit.man     \
-  documentation/man/hmmer.man       \
-  documentation/man/hmmfetch.man    \
-  documentation/man/hmmlogo.man     \
-  documentation/man/hmmpgmd.man     \
-  documentation/man/hmmpgmd_shard.man     \
-  documentation/man/hmmpress.man    \
-  documentation/man/hmmscan.man     \
-  documentation/man/hmmsearch.man   \
-  documentation/man/hmmsim.man      \
-  documentation/man/hmmstat.man     \
-  documentation/man/jackhmmer.man   \
-  documentation/man/makehmmerdb.man \
-  documentation/man/nhmmer.man      \
-  documentation/man/nhmmscan.man    \
-  documentation/man/phmmer.man      \
-  ])
 
 # Substitutions in Easel man pages:
 # EASEL_VERSION, EASEL_DATE, EASEL_COPYRIGHT, EASEL_LICENSE, EASEL_URL
@@ -763,7 +721,6 @@ AC_CONFIG_FILES([ \
 AC_CONFIG_HEADERS([easel/decoy_config.h])   # Put this first to keep gnu 'autoheader' from overwriting a real config file.
 AC_CONFIG_HEADERS([src/p7_config.h])
 AC_CONFIG_HEADERS([easel/esl_config.h])
-AC_CONFIG_HEADERS([libdivsufsort/divsufsort.h])
 
 # the following incantation establishes a symlink of
 # src/impl_{whatever} to src/impl in the *build* directory.

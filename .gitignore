@@ -48,3 +48,9 @@ src/makehmmerdb
 src/nhmmer
 src/nhmmscan
 src/phmmer
+
+# run_queries.sh 输出（命中表 / MSA / 计时 / 评分）
+results/
+stdout.*
+stderr.*
+__pycache__/
